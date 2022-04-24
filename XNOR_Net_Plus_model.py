@@ -1,12 +1,6 @@
-"""
-This Network is Strong Baseline in 'Training Binary Neural Networks with Real-To-Binary Convolution'.
-It use Bi-Real Network & scaling factor of XNOR-Net++'s learnable parameter(per output channel)
 
-"""
-from telnetlib import X3PAD
 import torch
 import torch.nn as nn
-import torch.utils.model_zoo as model_zoo
 import torch.nn.functional as F
 
 import sys
