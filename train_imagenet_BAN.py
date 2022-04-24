@@ -27,11 +27,11 @@ parser.add_argument('--batch_size', type=int, default=256, help='batch size')
 parser.add_argument('--epochs', type=int, default=256, help='num of training epochs')
 parser.add_argument('--learning_rate', type=float, default=1e-4, help='init learning rate')
 parser.add_argument('--momentum', type=float, default=0.9, help='momentum')
-parser.add_argument('--weight_decay', type=float, default=0, help='weight decay')
+parser.add_argument('--weight_decay', type=float, default=1e-6, help='weight decay')
 parser.add_argument('--save', type=str, default='./models/imagenet', help='path for saving trained models')
 parser.add_argument('--data', metavar='DIR', default='/home/data/imagenet/images/', help='path to dataset')
 parser.add_argument('--label_smooth', type=float, default=0.1, help='label smoothing')
-parser.add_argument('-j', '--workers', default=40, type=int, metavar='N',
+parser.add_argument('-j', '--workers', default=4, type=int, metavar='N',
                     help='number of data loading workers (default: 4)')
 args = parser.parse_args()
 
@@ -102,7 +102,6 @@ def main():
     lighting_param = 0.1
     train_transforms = transforms.Compose([
         transforms.RandomResizedCrop(224, scale=(crop_scale, 1.0)),
-        Lighting(lighting_param),
         transforms.RandomHorizontalFlip(),
         transforms.ToTensor(),
         normalize])

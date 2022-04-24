@@ -84,16 +84,21 @@ class BConv_case4(nn.Module):
         self.shape = (out_chn, in_chn, kernel_size, kernel_size)
         self.scale_shape = (1, out_chn, kernel_size, kernel_size)
         self.weights = nn.Parameter(torch.randn((self.number_of_weights,1), device='cuda') * 0.001, requires_grad=True)
-        self.init = True
+        #self.init = True
+        self.a = nn.Parameter(torch.rand((self.out_chn, 1), device='cuda') * 0.1, requires_grad=True)
+        self.b = nn.Parameter(torch.rand((int(56/(self.out_chn/64)), 1), device='cuda') * 0.1, requires_grad=True)
+        self.c = nn.Parameter(torch.rand((int(56/(self.out_chn/64)), 1), device='cuda') * 0.1, requires_grad=True)
 
     def forward(self, x):
         real_weights = self.weights.view(self.shape)
+        """
         if self.init == True :
             out_size = int((x.size()[2] + 2*self.padding - self.kernel_size) / self.stride) + 1
             self.a = nn.Parameter(torch.rand((self.out_chn, 1), device='cuda') * 0.1, requires_grad=True)
             self.b = nn.Parameter(torch.rand((out_size, 1), device='cuda') * 0.1, requires_grad=True)
             self.c = nn.Parameter(torch.rand((out_size, 1), device='cuda') * 0.1, requires_grad=True)
             self.init = False
+        """
         
         binary_weights_no_grad = torch.sign(real_weights)
         cliped_weights = torch.clamp(real_weights, -1.0, 1.0)
